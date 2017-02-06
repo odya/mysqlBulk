@@ -9,7 +9,7 @@ The mysqlBulk function supports a couple of methods.
 ## Array Input With Method: Loaddata (Preferred)
 
 What would really give it wings, is if you can supply the data as an array. That way I won't have to translate your raw queries to arrays, before I can convert them back to CSV format. Obviously skipping all that conversion saves a lot of time.
-```
+```php
 <?php
 $data   = array();
 $data[] = array('level' => 'err', 'msg' => 'foobar!');
@@ -32,7 +32,7 @@ Most of the time it's even easier cause you don't have to write queries.
 If you can really only deliver raw insert queries, use the loadsql_unsafe method. It's unsafe because I convert your queries to arrays on the fly. That also makes it 10 times slower (still twice as fast as other methods).
 
 This is what the basic flow could look like:
-```
+```php
 <?php
 $queries   = array();
 $queries[] = "INSERT INTO `log` (`level`, `msg`) VALUES ('err', 'foobar!')";
@@ -57,7 +57,7 @@ if (false === ($qps = mysqlBulk($queries, 'log', 'loadsql_unsafe', array(
 ## Safe SQL Input With Method: Transaction
 
 Want to do a Transaction?
-```
+```php
 <?php
 mysqlBulk($queries, 'transaction');
 ?>
@@ -66,7 +66,7 @@ mysqlBulk($queries, 'transaction');
 ## Options
 
 Change the query_handler from mysql_query to your actual query function. If you have a DB Class with an execute() method, you will have to encapsulate them inside an array like this:
-```
+```php
 <?php
 $db = new DBClass();
 mysqlBulk($queries, 'log', 'none', array(
@@ -78,7 +78,7 @@ mysqlBulk($queries, 'log', 'none', array(
 ```
 
 Don't want mysqlBulk to produce any errors? Use the trigger_errors option.
-```
+```php
 <?php
 mysqlBulk($queries, 'log', 'transaction', array(
     'trigger_errors' => false
@@ -87,7 +87,7 @@ mysqlBulk($queries, 'log', 'transaction', array(
 ```
 
 Want mysqlBulk to produce notices? Use the trigger_notices option.
-```
+```php
 <?php
 mysqlBulk($queries, 'log', 'transaction', array(
     'trigger_notices' => true.
